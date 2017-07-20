@@ -5,8 +5,6 @@ from PIL import Image, ImageDraw
 from PIL import ImageFont
 import datetime, calendar
 
-#cd ext4/YD/code/calendar\ generator/
-#./generator.py
 
 
 def printMonth(year,month,xst,yst,monWidth,draw):
@@ -25,7 +23,7 @@ def printMonth(year,month,xst,yst,monWidth,draw):
 
 	# Написать название месяца
 	mnames 	= [u'Январь',u'Февраль',u'Март',u'Апрель',u'Май',u'Июнь',u'Июль',u'Август',u'Сентябрь',u'Октябрь',u'Ноябрь',u'Декабрь']
-	font 		= ImageFont.truetype("Forum-Regular.otf", int(monWidth*0.075*1.5))
+	font 		= ImageFont.truetype("./fonts/Forum-Regular.otf", int(monWidth*0.075*1.5))
 	fsize = font.getsize(mnames[month-1])
 	draw.text((xst+(monWidth-fsize[0])/2, yst),mnames[month-1],(0,0,0),font=font) 
 
@@ -34,7 +32,7 @@ def printMonth(year,month,xst,yst,monWidth,draw):
 
 	(wday,dcount)	= calendar.monthrange(year, month)
 
-	fontcifr 	= ImageFont.truetype("BebasNeueLight.ttf", int(monWidth*0.075))
+	fontcifr 	= ImageFont.truetype("./fonts/BebasNeueLight.ttf", int(monWidth*0.075))
 	mlen 		= fontcifr.getsize(str(30))		# циферки будут по правому краю, это максимальная длина 
 	yst 		+= ceilh*0.4  					# чутка хочу сдвинуть название от чисел
 
@@ -58,7 +56,7 @@ def printYear(year,byear,xst,yst,yearWidth,draw):
 	ceilHeight 	= yearWidth*0.166*0.8
 
 	# Выводим название года
-	yfont		= ImageFont.truetype("Forum-Regular.otf", int(ceilWidt*0.85*0.075*3))
+	yfont		= ImageFont.truetype("./fonts/Forum-Regular.otf", int(ceilWidt*0.85*0.075*3))
 	vozr 		= year-byear
 	capt 		= str(year)+u'г 			'+ str(vozr)
 	if vozr % 10>1 and vozr % 10<5 and vozr//10 != 1 :
@@ -122,5 +120,5 @@ while i<60:
 
 # год, месяц, х , у,  ширина, рисовальщик
 
-image.save("./full.png", "PNG")
+image.save("./result/full.png", "PNG")
 del draw
