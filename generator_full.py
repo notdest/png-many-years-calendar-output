@@ -91,7 +91,7 @@ def printYear(year,byear,xst,yst,yearWidth,draw):
 paperWidth 	= 1189
 paperHeight = 841
 
-dpi 		= 300
+dpi 		= 72
 
 bYear 		= 1991
 
