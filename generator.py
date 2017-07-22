@@ -10,7 +10,7 @@ import datetime, calendar
 def printMonth(year,month,xst,yst,monWidth,draw):
 	monHeight 	= monWidth*0.85
 
-	ceilw 	= round(monWidth/7) 									# ширина ячейки, под 7 дней недели
+	ceilw 	= round(monWidth/7) 										# ширина ячейки, под 7 дней недели
 	ceilh 	= round(monHeight/7)										# высота ячеки, 6 недель максимум + название месяца
 
 	#отладочные линии
@@ -33,8 +33,8 @@ def printMonth(year,month,xst,yst,monWidth,draw):
 	(wday,dcount)	= calendar.monthrange(year, month)
 
 	fontcifr 	= ImageFont.truetype("./fonts/BebasNeueLight.ttf", int(monWidth*0.075))
-	mlen 		= fontcifr.getsize(str(30))		# циферки будут по правому краю, это максимальная длина 
-	yst 		+= ceilh*0.4  					# чутка хочу сдвинуть название от чисел
+	mlen 		= fontcifr.getsize(str(30))								# циферки будут по правому краю, это максимальная длина 
+	yst 		+= ceilh*0.4  											# чутка хочу сдвинуть название от чисел
 
 	i 		= 1
 	strnum 	= 1
@@ -57,7 +57,7 @@ def printYear(year,byear,xst,yst,yearWidth,draw):
 
 	# Выводим название года
 	yfont		= ImageFont.truetype("./fonts/Forum-Regular.otf", int(ceilWidt*0.85*0.075*3))
-	vozr 		= year-byear
+	vozr 		= year - byear
 	capt 		= str(year)+u'г 			'+ str(vozr)
 	if vozr % 10>1 and vozr % 10<5 and vozr//10 != 1 :
 		capt += u' года'
@@ -84,6 +84,25 @@ def printYear(year,byear,xst,yst,yearWidth,draw):
 
 		i 		+=1
 
+def print60years(bYear,imageWidth,imageHeight,draw):
+	ceilWidt 	= imageWidth*0.2
+	ceilHeight 	= ceilWidt*0.295
+	xst 		= int(imageWidth*(20/float(paperWidth)))
+	yst 		= int(imageWidth*(10/float(paperWidth)))
+
+
+	ystr 	= 0
+	ystlb 	= 0
+	i 		= 0
+
+	while i<60:
+		printYear(bYear+i,bYear,xst+ystlb*ceilWidt,yst+ystr*ceilHeight,ceilWidt*0.8,draw)
+		i 		+= 1
+		ystlb	+= 1
+		if ystlb > 4:
+			ystlb 	=  0
+			ystr 	+= 1
+
 #-----------------------------------------------------------------------------------
 
 paperWidth 	= 1189
@@ -93,32 +112,16 @@ dpi 		= 72
 
 bYear 		= 1991
 
+
 imageWidth 	= int(paperWidth*dpi/25.4)
 imageHeight = int(paperHeight*dpi/25.4)
 
 image 		= Image.new("RGB", (imageWidth,imageHeight), (255,255,255))
 draw 		= ImageDraw.Draw(image)
 
-ceilWidt 	= imageWidth*0.2
-ceilHeight 	= ceilWidt*0.295
-xst 		= int(imageWidth*(20/float(paperWidth)))
-yst 		= int(imageWidth*(10/float(paperWidth)))
 
 
-ystr 	= 0
-ystlb 	= 0
-i 		= 0
+print60years(bYear,imageWidth,imageHeight,draw)
 
-while i<60:
-	printYear(bYear+i,bYear,xst+ystlb*ceilWidt,yst+ystr*ceilHeight,ceilWidt*0.8,draw)
-	i 		+= 1
-	ystlb	+= 1
-	if ystlb > 4:
-		ystlb 	=  0
-		ystr 	+= 1
-
-
-# год, месяц, х , у,  ширина, рисовальщик
-
-image.save("./result/full.png", "PNG")
+image.save("./result/"+str(bYear )+"_A0.png", "PNG")
 del draw
