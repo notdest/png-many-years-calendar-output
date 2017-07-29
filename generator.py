@@ -5,6 +5,7 @@ from PIL import Image, ImageDraw
 from PIL import ImageFont
 import datetime, calendar
 
+#TODO: год, года, лет - надо этот момент на инглиш перевести, да вообще глянуть везде русские буквы
 
 
 def printMonth(year,month,x,y,monthWidth,draw):
@@ -52,39 +53,38 @@ def printMonth(year,month,x,y,monthWidth,draw):
 		lineNum	+= 1
 
 	
-def printYear(year,byear,x,y,yearWidth,draw):
-	stlb 		= 6	
-	ceilWidt 	= yearWidth/stlb
-	ceilHeight 	= yearWidth*0.166*0.8
+def printYear(year,yearOfBirth,x,y,yearWidth,draw):
+	columnsCount = 6	
+	cellWidth 	 = yearWidth/columnsCount
+	cellHeight 	 = yearWidth*0.166*0.8
 
-	# Выводим название года
-	yfont		= ImageFont.truetype("./fonts/Forum-Regular.otf", int(ceilWidt*0.85*0.075*3))
-	vozr 		= year - byear
-	capt 		= str(year)+u'г 			'+ str(vozr)
-	if vozr % 10>1 and vozr % 10<5 and vozr//10 != 1 :
-		capt += u' года'
-	elif vozr % 10==1 and vozr//10 != 1 :
-		capt += u' год'
+	# Display the name of the year
+	yearFont	= ImageFont.truetype("./fonts/Forum-Regular.otf", int(cellWidth*0.85*0.075*3))
+	age 		= year - yearOfBirth
+	caption 	= str(year)+u'г 			'+ str(age)
+	if age % 10>1 and age % 10<5 and age//10 != 1 :
+		caption += u' года'
+	elif age % 10==1 and age//10 != 1 :
+		caption += u' год'
 	else:
-		capt += u' лет'
+		caption += u' лет'
 
-	ysize 		= yfont.getsize(capt)
-	draw.text((x+(yearWidth-ysize[0])/2, y), capt ,(0,0,0),font=yfont)
-	y 		+= ceilWidt*0.85*0.075*4
+	captionSize = yearFont.getsize(caption)
+	draw.text((x+ (yearWidth-captionSize[0])/2 , y), caption ,(0,0,0),font=yearFont)
+	y 			+= cellWidth*0.85*0.075*4
 
-	# Выводим месяцы
-	i 		= 1
-	strn 	= 0
-	stlbn 	= 0
+	# Print the months
+	i 				= 1
+	lineNumber		= 0
+	columnNumber 	= 0
 	while i<13:
-		printMonth(year,i,x+ceilWidt*stlbn,y+strn*ceilHeight,ceilWidt*0.85,draw)
-
-		stlbn 	+= 1
-		if i%stlb == 0:
-			strn 	+= 1
-			stlbn 	= 0
-
+		printMonth(year,  i,  x+cellWidth*columnNumber,  y+lineNumber*cellHeight,  cellWidth*0.85,  draw)
+		columnNumber 	+= 1
+		if i%columnsCount == 0:
+			lineNumber 	 += 1
+			columnNumber = 0
 		i 		+=1
+
 
 def print60years(bYear,imageWidth,imageHeight,draw):
 	ceilWidt 	= imageWidth*0.2
