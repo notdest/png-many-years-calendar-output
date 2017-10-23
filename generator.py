@@ -105,6 +105,10 @@ def print60Years(yearOfBirth,imageWidth,imageHeight,dpi,draw):
 			columnNum 	=  0
 			lineNum 	+= 1
 
+																							# add copyright
+	font 	= ImageFont.truetype("./fonts/BebasNeueLight.ttf", int( cellWidth*0.0085 ))
+	draw.text(( x , y + int(cellHeight*0.8) ), 'https://github.com/notdest/png-many-years-calendar', 0, font=font) 
+
 #-----------------------------------------------------------------------------------
 
 paperWidth 	= 1189
