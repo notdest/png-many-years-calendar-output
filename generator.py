@@ -129,22 +129,42 @@ def print60Years(yearOfBirth,imageWidth,imageHeight,dpi,draw):
 paperWidth 	= 1189
 paperHeight = 841
 
-dpi 		= 72
+dpi 		= 300
 
 yearOfBirth = 1991
 
 rus 		= True
 
-
 imageWidth 	= int(paperWidth*dpi/25.4)
 imageHeight = int(paperHeight*dpi/25.4)
 
-image 		= Image.new("L", (imageWidth,imageHeight), 255)
-draw 		= ImageDraw.Draw(image)
+i = 1957
 
+while i<2017:
 
+	yearOfBirth = i
+	image 		= Image.new("L", (imageWidth,imageHeight), 255)
+	draw 		= ImageDraw.Draw(image)
 
-print60Years(yearOfBirth,imageWidth,imageHeight,dpi,draw)
+	print60Years(yearOfBirth,imageWidth,imageHeight,dpi,draw)
 
-image.save("./result/"+str(yearOfBirth )+"_A0.png", "PNG")
-del draw
+	image.save("./result/rus/60/"+str(yearOfBirth )+"_A0.png", "PNG")
+	del draw
+	del image
+	i += 1
+
+rus 		= False
+i = 1957
+
+while i<2017:
+
+	yearOfBirth = i
+	image 		= Image.new("L", (imageWidth,imageHeight), 255)
+	draw 		= ImageDraw.Draw(image)
+
+	print60Years(yearOfBirth,imageWidth,imageHeight,dpi,draw)
+
+	image.save("./result/eng/60/"+str(yearOfBirth )+"_A0.png", "PNG")
+	del draw
+	del image
+	i += 1
