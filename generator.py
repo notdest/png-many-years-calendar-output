@@ -16,10 +16,10 @@ def printMonth(year,month,x,y,monthWidth,draw):
 
 	# Lines for debugging the geometry of the month
 	if 0 :
-		draw.line((	x, 				y, 				x+monthWidth, 	y				), fill="#000000", width=1)  #  --
-		draw.line((	x, 				y, 				x, 				y+monthHeight	), fill="#000000", width=1)  #	|
-		draw.line((	x, 				y+monthHeight, 	x+monthWidth, 	y+monthHeight	), fill="#000000", width=1)  #	_
-		draw.line((	x+monthWidth, 	y, 				x+monthWidth, 	y+monthHeight	), fill="#000000", width=1)  #	  |
+		draw.line((	x, 				y, 				x+monthWidth, 	y				), fill="#00", width=1)  #  --
+		draw.line((	x, 				y, 				x, 				y+monthHeight	), fill="#00", width=1)  #	|
+		draw.line((	x, 				y+monthHeight, 	x+monthWidth, 	y+monthHeight	), fill="#00", width=1)  #	_
+		draw.line((	x+monthWidth, 	y, 				x+monthWidth, 	y+monthHeight	), fill="#00", width=1)  #	  |
 
 
 	# Write the name of the month
@@ -28,7 +28,7 @@ def printMonth(year,month,x,y,monthWidth,draw):
 	# names 	= [u'January',u'February',u'March',u'April',u'May',u'June',u'July',u'August',u'September',u'October',u'November',u'December']
 	font 		= ImageFont.truetype("./fonts/Forum-Regular.otf", int(monthWidth*0.075*1.5))
 	nameSize 	= font.getsize(names[month-1])
-	draw.text(( x+(monthWidth-nameSize[0])/2 , y ), names[month-1], (0,0,0), font=font) 
+	draw.text(( x+(monthWidth-nameSize[0])/2 , y ), names[month-1], 0, font=font) 
 
 	# Figures should be moved slightly to the right
 	x += monthWidth*0.03
@@ -44,7 +44,7 @@ def printMonth(year,month,x,y,monthWidth,draw):
 	while i<=daysCount:
 		while dayOfTheWeek<7 and i<=daysCount:
 			length 	= fontNumeric.getsize(str(i))
-			draw.text(( x+ dayOfTheWeek*cellWidth + (maxLength[0]-length[0])/2 , y+ cellHeight*lineNum ),str(i),(0,0,0),font=fontNumeric )
+			draw.text(( x+ dayOfTheWeek*cellWidth + (maxLength[0]-length[0])/2 , y+ cellHeight*lineNum ),str(i),0,font=fontNumeric )
 			i +=1
 			dayOfTheWeek += 1;
 			pass
@@ -70,7 +70,7 @@ def printYear(year,yearOfBirth,x,y,yearWidth,draw):
 		caption += u' лет'
 
 	captionSize = yearFont.getsize(caption)
-	draw.text((x+ (yearWidth-captionSize[0])/2 , y), caption ,(0,0,0),font=yearFont)
+	draw.text((x+ (yearWidth-captionSize[0])/2 , y), caption ,0,font=yearFont)
 	y 			+= cellWidth*0.85*0.075*4
 
 	# Print the months
@@ -86,44 +86,44 @@ def printYear(year,yearOfBirth,x,y,yearWidth,draw):
 		i 		+=1
 
 
-def print60years(bYear,imageWidth,imageHeight,draw):
-	ceilWidt 	= imageWidth*0.2
-	ceilHeight 	= ceilWidt*0.295
-	x 		= int(imageWidth*(20/float(paperWidth)))
-	y 		= int(imageWidth*(10/float(paperWidth)))
+def print60Years(yearOfBirth,imageWidth,imageHeight,dpi,draw):
+	cellWidth 	= imageWidth*0.2															# width and height of the cell of one year
+	cellHeight 	= cellWidth*0.295
+	x 			= int(20*dpi/25.4)
+	y 			= int(10*dpi/25.4) 															# left and right indents (mm)
 
 
-	ystr 	= 0
-	ystlb 	= 0
-	i 		= 0
+	lineNum 	= 0
+	columnNum 	= 0
+	i 			= 0
 
 	while i<60:
-		printYear(bYear+i,bYear,x+ystlb*ceilWidt,y+ystr*ceilHeight,ceilWidt*0.8,draw)
-		i 		+= 1
-		ystlb	+= 1
-		if ystlb > 4:
-			ystlb 	=  0
-			ystr 	+= 1
+		printYear(yearOfBirth+i, yearOfBirth, x+columnNum*cellWidth, y+lineNum*cellHeight ,cellWidth*0.8, draw)
+		i 			+= 1
+		columnNum	+= 1
+		if columnNum > 4:
+			columnNum 	=  0
+			lineNum 	+= 1
 
 #-----------------------------------------------------------------------------------
 
 paperWidth 	= 1189
 paperHeight = 841
 
-dpi 		= 72
+dpi 		= 300
 
-bYear 		= 1991
+yearOfBirth = 1991
 
 
 imageWidth 	= int(paperWidth*dpi/25.4)
 imageHeight = int(paperHeight*dpi/25.4)
 
-image 		= Image.new("RGB", (imageWidth,imageHeight), (255,255,255))
+image 		= Image.new("L", (imageWidth,imageHeight), 255)
 draw 		= ImageDraw.Draw(image)
 
 
 
-print60years(bYear,imageWidth,imageHeight,draw)
+print60Years(yearOfBirth,imageWidth,imageHeight,dpi,draw)
 
-image.save("./result/"+str(bYear )+"_A0.png", "PNG")
+image.save("./result/"+str(yearOfBirth )+"_A0.png", "PNG")
 del draw
