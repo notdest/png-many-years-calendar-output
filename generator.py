@@ -5,7 +5,6 @@ from PIL import Image, ImageDraw
 from PIL import ImageFont
 import datetime, calendar
 
-#TODO: год, года, лет - надо этот момент на инглиш перевести, да вообще глянуть везде русские буквы
 
 
 def printMonth(year,month,x,y,monthWidth,draw):
@@ -124,10 +123,36 @@ def print60Years(yearOfBirth,imageWidth,imageHeight,dpi,draw):
 	font 	= ImageFont.truetype("./fonts/BebasNeueLight.ttf", int( cellWidth*0.0085 ))
 	draw.text(( x , y + int(cellHeight*0.8) ), 'https://github.com/notdest/png-many-years-calendar', 0, font=font) 
 
+
+
+
+def print80Years(yearOfBirth,imageWidth,imageHeight,dpi,draw):
+	cellWidth 	= imageWidth*0.2															# width and height of the cell of one year
+	cellHeight 	= cellWidth*0.295
+	x 			= int(20*dpi/25.4)
+	y 			= int(30*dpi/25.4) 															# left and right indents (mm)
+
+
+	lineNum 	= 0
+	columnNum 	= 0
+	i 			= 0
+
+	while i<80:
+		printYear(yearOfBirth+i, yearOfBirth, x+columnNum*cellWidth*0.97 , y+lineNum*cellHeight*1.46 ,cellWidth*0.93, draw)
+		i 			+= 1
+		columnNum	+= 1
+		if columnNum > 4:
+			columnNum 	=  0
+			lineNum 	+= 1
+
+																							# add copyright
+	font 	= ImageFont.truetype("./fonts/BebasNeueLight.ttf", int( cellWidth*0.017 ))
+	draw.text(( x , y + int(cellHeight*0.95) ), 'https://github.com/notdest/png-many-years-calendar', 0, font=font) 
+
 #-----------------------------------------------------------------------------------
 
-paperWidth 	= 1189
-paperHeight = 841
+paperWidth 	= 841 								# vertical sheet orientation
+paperHeight = 1189 
 
 dpi 		= 300
 
@@ -138,7 +163,54 @@ rus 		= True
 imageWidth 	= int(paperWidth*dpi/25.4)
 imageHeight = int(paperHeight*dpi/25.4)
 
-i = 1957
+
+
+
+
+rus 	= True 									# 80 years
+i 		= 1937
+
+while i<2017:
+
+	yearOfBirth = i
+	image 		= Image.new("L", (imageWidth,imageHeight), 255)
+	draw 		= ImageDraw.Draw(image)
+
+	print80Years(yearOfBirth,imageWidth,imageHeight,dpi,draw)
+
+	image.save("./result/rus/80/"+str(yearOfBirth )+"_A0.png", "PNG")
+	del draw
+	del image
+	i += 1
+
+rus 	= False
+i 		= 1937
+
+while i<2017:
+
+	yearOfBirth = i
+	image 		= Image.new("L", (imageWidth,imageHeight), 255)
+	draw 		= ImageDraw.Draw(image)
+
+	print80Years(yearOfBirth,imageWidth,imageHeight,dpi,draw)
+
+	image.save("./result/eng/80/"+str(yearOfBirth )+"_A0.png", "PNG")
+	del draw
+	del image
+	i += 1
+
+quit()
+
+
+paperWidth 	= 1189								# horizontal sheet orientation, 60 years
+paperHeight = 841
+
+imageWidth 	= int(paperWidth*dpi/25.4)
+imageHeight = int(paperHeight*dpi/25.4)
+
+
+rus 	= True
+i 		= 1957
 
 while i<2017:
 
@@ -153,8 +225,8 @@ while i<2017:
 	del image
 	i += 1
 
-rus 		= False
-i = 1957
+rus 	= False
+i 		= 1957
 
 while i<2017:
 
