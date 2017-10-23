@@ -9,6 +9,7 @@ import datetime, calendar
 
 
 def printMonth(year,month,x,y,monthWidth,draw):
+	global rus
 	monthHeight 	= monthWidth*0.85
 
 	cellWidth 		= round( monthWidth/7 )								# Cell width, for 7 days of the week
@@ -23,9 +24,11 @@ def printMonth(year,month,x,y,monthWidth,draw):
 
 
 	# Write the name of the month
-	names 		= [u'Январь',u'Февраль',u'Март',u'Апрель',u'Май',u'Июнь',u'Июль',u'Август',u'Сентябрь',u'Октябрь',u'Ноябрь',u'Декабрь']
+	if rus :
+		names 		= [u'Январь',u'Февраль',u'Март',u'Апрель',u'Май',u'Июнь',u'Июль',u'Август',u'Сентябрь',u'Октябрь',u'Ноябрь',u'Декабрь']
 	# Names in English
-	# names 	= [u'January',u'February',u'March',u'April',u'May',u'June',u'July',u'August',u'September',u'October',u'November',u'December']
+	else :
+		names 	= [u'January',u'February',u'March',u'April',u'May',u'June',u'July',u'August',u'September',u'October',u'November',u'December']
 	font 		= ImageFont.truetype("./fonts/Forum-Regular.otf", int(monthWidth*0.075*1.5))
 	nameSize 	= font.getsize(names[month-1])
 	draw.text(( x+(monthWidth-nameSize[0])/2 , y ), names[month-1], 0, font=font) 
@@ -54,6 +57,7 @@ def printMonth(year,month,x,y,monthWidth,draw):
 
 	
 def printYear(year,yearOfBirth,x,y,yearWidth,draw):
+	global rus
 	columnsCount = 6	
 	cellWidth 	 = yearWidth/columnsCount
 	cellHeight 	 = yearWidth*0.166*0.8
@@ -61,13 +65,24 @@ def printYear(year,yearOfBirth,x,y,yearWidth,draw):
 	# Display the name of the year
 	yearFont	= ImageFont.truetype("./fonts/Forum-Regular.otf", int(cellWidth*0.85*0.075*3))
 	age 		= year - yearOfBirth
-	caption 	= str(year)+u'г 			'+ str(age)
-	if age % 10>1 and age % 10<5 and age//10 != 1 :
-		caption += u' года'
-	elif age % 10==1 and age//10 != 1 :
-		caption += u' год'
-	else:
-		caption += u' лет'
+
+	caption 	= str(year)
+	if rus : 
+		caption += u'г'
+	caption 	+= ' 			'+ str(age)
+
+	if rus:
+		if age % 10>1 and age % 10<5 and age//10 != 1 :
+			caption += u' года'
+		elif age % 10==1 and age//10 != 1 :
+			caption += u' год'
+		else:
+			caption += u' лет'
+	else :
+		if age % 10==1 :
+			caption += u' year'
+		else:
+			caption += u' years'
 
 	captionSize = yearFont.getsize(caption)
 	draw.text((x+ (yearWidth-captionSize[0])/2 , y), caption ,0,font=yearFont)
@@ -114,9 +129,11 @@ def print60Years(yearOfBirth,imageWidth,imageHeight,dpi,draw):
 paperWidth 	= 1189
 paperHeight = 841
 
-dpi 		= 300
+dpi 		= 72
 
 yearOfBirth = 1991
+
+rus 		= True
 
 
 imageWidth 	= int(paperWidth*dpi/25.4)
