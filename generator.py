@@ -149,6 +149,30 @@ def print80Years(yearOfBirth,imageWidth,imageHeight,dpi,draw):
 	font 	= ImageFont.truetype("./fonts/BebasNeueLight.ttf", int( cellWidth*0.017 ))
 	draw.text(( x , y + int(cellHeight*0.95) ), 'https://github.com/notdest/png-many-years-calendar', 0, font=font) 
 
+
+def print100Years(yearOfBirth,imageWidth,imageHeight,dpi,draw):
+	cellWidth 	= imageWidth*0.2															# width and height of the cell of one year
+	cellHeight 	= cellWidth*0.295
+	x 			= int(20*dpi/25.4)
+	y 			= int(30*dpi/25.4) 															# left and right indents (mm)
+
+
+	lineNum 	= 0
+	columnNum 	= 0
+	i 			= 0
+
+	while i<100:
+		printYear(yearOfBirth+i, yearOfBirth, x+columnNum*cellWidth*0.97 , y+lineNum*cellHeight*1.15 ,cellWidth*0.93, draw)
+		i 			+= 1
+		columnNum	+= 1
+		if columnNum > 4:
+			columnNum 	=  0
+			lineNum 	+= 1
+
+																							# add copyright
+	font 	= ImageFont.truetype("./fonts/BebasNeueLight.ttf", int( cellWidth*0.017 ))
+	draw.text(( x , y + int(cellHeight*0.95) ), 'https://github.com/notdest/png-many-years-calendar', 0, font=font) 
+
 #-----------------------------------------------------------------------------------
 
 paperWidth 	= 841 								# vertical sheet orientation
@@ -165,6 +189,42 @@ imageHeight = int(paperHeight*dpi/25.4)
 
 
 
+rus 	= True 									# 100 years
+i 		= 1917
+
+while i<2017:
+
+	yearOfBirth = i
+	image 		= Image.new("L", (imageWidth,imageHeight), 255)
+	draw 		= ImageDraw.Draw(image)
+
+	print100Years(yearOfBirth,imageWidth,imageHeight,dpi,draw)
+
+	image.save("./result/rus/100/"+str(yearOfBirth )+"_A0.png", "PNG")
+	del draw
+	del image
+	i += 1
+
+rus 	= False
+i 		= 1917
+
+while i<2017:
+
+	yearOfBirth = i
+	image 		= Image.new("L", (imageWidth,imageHeight), 255)
+	draw 		= ImageDraw.Draw(image)
+
+	print100Years(yearOfBirth,imageWidth,imageHeight,dpi,draw)
+
+	image.save("./result/eng/100/"+str(yearOfBirth )+"_A0.png", "PNG")
+	del draw
+	del image
+	i += 1
+
+
+
+
+quit()
 
 
 rus 	= True 									# 80 years
@@ -199,7 +259,7 @@ while i<2017:
 	del image
 	i += 1
 
-quit()
+
 
 
 paperWidth 	= 1189								# horizontal sheet orientation, 60 years
