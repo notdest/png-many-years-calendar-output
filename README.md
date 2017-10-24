@@ -2,12 +2,4 @@
 Календарь-изображение на большое количество лет. По умолчанию 60 лет на формате А0
 
 
-:sheep:
-:honeybee:
-:palm_tree:
-:earth_americas:
-:octocat:
-:crystal_ball:
-:hourglass:
-:hourglass_flowing_sand:
-:new:
+*Read this in other languages: [English](README.md), [Русский](README.ru.md)*
