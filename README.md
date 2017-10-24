@@ -2,4 +2,4 @@
 Календарь-изображение на большое количество лет. По умолчанию 60 лет на формате А0
 
 
-*Read this in other languages: [English](README.md), [Русский](README.ru.md)*
+*Read this in other languages: English, [Русский](README.ru.md)*
