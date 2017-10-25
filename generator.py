@@ -68,20 +68,22 @@ def printYear(year,yearOfBirth,x,y,yearWidth,draw):
 	caption 	= str(year)
 	if rus : 
 		caption += u'г'
-	caption 	+= ' 			'+ str(age)
 
-	if rus:
-		if age % 10>1 and age % 10<5 and age//10 != 1 :
-			caption += u' года'
-		elif age % 10==1 and age//10 != 1 :
-			caption += u' год'
-		else:
-			caption += u' лет'
-	else :
-		if age % 10==1 :
-			caption += u' year'
-		else:
-			caption += u' years'
+	if age >= 0 :
+		caption 	+= ' 			'+ str(age)
+
+		if rus:
+			if age % 10>1 and age % 10<5 and age//10 != 1 :
+				caption += u' года'
+			elif age % 10==1 and age//10 != 1 :
+				caption += u' год'
+			else:
+				caption += u' лет'
+		else :
+			if age % 10==1 :
+				caption += u' year'
+			else:
+				caption += u' years'
 
 	captionSize = yearFont.getsize(caption)
 	draw.text((x+ (yearWidth-captionSize[0])/2 , y), caption ,0,font=yearFont)
@@ -173,9 +175,76 @@ def print100Years(yearOfBirth,imageWidth,imageHeight,dpi,draw):
 	font 	= ImageFont.truetype("./fonts/BebasNeueLight.ttf", int( cellWidth*0.017 ))
 	draw.text(( x , y + int(cellHeight*0.95) ), 'https://github.com/notdest/png-many-years-calendar', 0, font=font) 
 
+
+
+def printA4(year,imageWidth,imageHeight,dpi,draw):
+
+	cellWidth 	= imageWidth  - 20*dpi/25.4														# width and height of the cell of one year
+	cellHeight 	= cellWidth*0.295
+	x 			= int(10*dpi/25.4)
+	y 			= int(10*dpi/25.4) 																# left and right indents (mm)
+
+	printYear(year,     year + 1, x , y  ,cellWidth, draw)
+	printYear(year +5,  year + 6, x , y+1*cellHeight*1.23  ,cellWidth, draw)
+	printYear(year +10, year + 11, x , y+2*cellHeight*1.23  ,cellWidth, draw)
+	printYear(year +15, year + 16, x , y+3*cellHeight*1.23  ,cellWidth, draw)
+	#printYear(year +4, year + 5, x , y+4*cellHeight  ,cellWidth, draw)
+
+																							# add copyright
+	if year == 2011:
+		font 	= ImageFont.truetype("./fonts/BebasNeueLight.ttf", int( cellWidth*0.017 ))
+		draw.text(( x , y + int(cellHeight*1.05) ), 'https://github.com/notdest/png-many-years-calendar', 0, font=font) 
+
 #-----------------------------------------------------------------------------------
 
-paperWidth 	= 841 								# vertical sheet orientation
+
+
+paperWidth 	= 210 								# for A4
+paperHeight = 297 
+
+dpi 		= 300
+
+year 		= 1910
+
+rus 		= True
+
+imageWidth 	= int(paperWidth*dpi/25.4)
+imageHeight = int(paperHeight*dpi/25.4)
+
+
+
+i = 0
+
+while year < 2110 :
+	while i<5 :
+		image 		= Image.new("L", (imageWidth,imageHeight), 255)
+		draw 		= ImageDraw.Draw(image)
+
+		printA4(year+i,imageWidth,imageHeight,dpi,draw)
+
+		image.save("./result/"+str(year+i )+"_A4.png", "PNG")
+		del draw
+		del image
+		i += 1
+	i 		= 0
+	year 	+= 20 
+
+	#  OK google "convert *.png outputfile.pdf"
+
+
+
+quit()
+
+image 		= Image.new("L", (imageWidth,imageHeight), 255)
+draw 		= ImageDraw.Draw(image)
+
+printA4(year,imageWidth,imageHeight,dpi,draw)
+
+image.save("./result/"+str(1 )+"_A4.png", "PNG")
+del draw
+del image
+
+paperWidth 	= 841 								# vertical sheet orientation, A0
 paperHeight = 1189 
 
 dpi 		= 300
@@ -220,11 +289,6 @@ while i<2017:
 	del draw
 	del image
 	i += 1
-
-
-
-
-quit()
 
 
 rus 	= True 									# 80 years
