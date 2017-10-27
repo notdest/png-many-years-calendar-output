@@ -12,8 +12,7 @@
 
 * Календарь на 100 лет на **вертикально** ориентированном листе. Площадь каждого года такая же, как у предыдущего, но они расположены немного плотнее [Папка с изображениями :open_file_folder:](result/rus/100)
 
-Также есть *pdf-версия* на большом количестве листов А4([Скачать pdf](https://github.com/notdest/png-many-years-calendar/raw/master/result/A4.pdf)). 
+Также есть *pdf-версия* на большом количестве листов А4([Скачать <img src="img/pdf-icon.png" alt="pdf"  height="25" />](https://github.com/notdest/png-many-years-calendar/raw/master/result/A4.pdf)). 
 
 По коду. Проект содержит единственный файл [generator.py](generator.py), в нем наиболее интересны для повторного использования функции `printMonth()` и `printYear()`.
 
-<!-- [![Foo](http://www.google.com.au/images/nav_logo7.png)](http://google.com.au/) -->
