@@ -1,4 +1,4 @@
-__#__ Календарь на одну жизнь #
+# Календарь на одну жизнь #
 
 *Read this in other languages: [English](README.md), Русский*
 
